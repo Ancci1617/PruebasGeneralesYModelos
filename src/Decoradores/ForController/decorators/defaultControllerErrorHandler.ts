@@ -4,9 +4,9 @@ import { container } from "tsyringe";
 import { AsyncLocalStorageUserContext } from "../infraestructure/AsyncLocalStorageUserContext";
 
 
-export const defaultControllerErrorHandler = () => (
+export function defaultControllerErrorHandler(
     target: any, propertyKey: string, descriptor: TypedPropertyDescriptor<Controller>
-) => {
+) {
     const metodoOriginal = descriptor.value;
     descriptor.value = async function (req : Request,res : Response,next? : NextFunction){
         try {

@@ -8,7 +8,7 @@ export const handleZodShema = (schema : ZodType) => (
     descriptor: TypedPropertyDescriptor<Controller>
 ) => {
 
-    const metodoOriginal = descriptor.value;
+    const metodoOriginal = descriptor.value!;
 
     descriptor.value = async function (req : Request,res : Response,next? : NextFunction){
         
@@ -16,7 +16,7 @@ export const handleZodShema = (schema : ZodType) => (
         try {
             const validatedObject = schema.parse(req.body);
             req.body = validatedObject;
-            await metodoOriginal?.call(this,req,res,next);
+            await metodoOriginal.call(this,req,res,next);
             
         } catch (error) {
             if(error instanceof ZodError){
