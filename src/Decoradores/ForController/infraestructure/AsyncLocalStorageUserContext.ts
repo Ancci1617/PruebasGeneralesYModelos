@@ -1,4 +1,4 @@
-import { injectable, singleton } from "tsyringe";
+import { singleton } from "tsyringe";
 import { UserContext, usuario } from "../domains/UserContext";
 
 import {AsyncLocalStorage} from "async_hooks";

@@ -1,6 +1,9 @@
 
-import {createPool} from "mysql2/promise";
-const pool = createPool({
+import {createPool,PoolConnection} from "mysql2/promise";
+import {UnitOfWork,UnitOfWork_INJECTION_TOKEN} from "../../domain/interfaces/UnitOfWork";
+import { container } from "tsyringe";
+import { AsyncLocalStorageUnitOfWork } from "../AsyncLocalStorageUnitOfWork/AsyncLocalStorageUnitOfWork";
+export const pool = createPool({
     host: 'localhost',
     user: 'root',
     password : '123',
@@ -9,8 +12,14 @@ const pool = createPool({
 })
 export class MysqlRepository {  
 
-    protected getConnection(){
-        return pool.getConnection();
+    private unitOfWork = container.resolve<AsyncLocalStorageUnitOfWork>(UnitOfWork_INJECTION_TOKEN);
+
+    protected async connection() : Promise<PoolConnection>{
+        if(this.unitOfWork.isInTransaction()){
+            return this.unitOfWork.getConnection();
+        }
+
+        return await pool.getConnection();
     }
 
 

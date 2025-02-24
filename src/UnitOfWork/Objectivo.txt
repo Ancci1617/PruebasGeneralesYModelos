@@ -1,0 +1,31 @@
+
+3 Aggregates Root: 
+Pagos,Credito (Venta a credito), Transferencia
+
+
+En donde mediante un SyncEventBus, los viewModelos respectivos + las 
+proyecciones entre agregados se actualizaran
+
+
+Trabajando con un UnitOfWork utlizando el decorador @Transactional
+
+
+Casos de uso:
+*Cargar pago
+
+
+ViewModels:
+*TransferenciaConPagosAsociados
+*Cobranzas (resumen de todos los creditos y sus deudas)
+
+App:
+*Una interfaz donde se ven todas las tranferencias que existen
+junto con los pagos que tiene asociadas - 
+Utiliza el viewModel TransferenciaConPagosAsociados.
+
+*Una interfaz para ver los datos de los clientes y sus creditos.
+
+*Interfaz con tabla con todos los creditos existentes y sus deudas respectivas.
+
+
+
